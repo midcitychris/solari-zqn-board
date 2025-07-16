@@ -3,10 +3,10 @@
 This project recreates a retro-style Solari departure board using HTML, CSS, and JavaScript. Click anywhere on the screen to activate the animation — each letter flips with a mechanical clack sound until it reveals the destination: `ZQN` (Queenstown, New Zealand).
 
 ## 🔗 Live Demo
-🖥️ [View the Flipboard in Action]([https://midcitychris.github.io/solari-board-zqn/](https://midcitychris.github.io/solari-zqn-board/))
+🖥️ [View the Flipboard in Action](https://midcitychris.github.io/solari-zqn-board/)
 
 ## 📁 GitHub Repository
-📂 [Browse the Code on GitHub](https://github.com/midcitychris/solari-board-zqn)
+📂 [Browse the Code on GitHub](https://github.com/midcitychris/solari-zqn-board)
 
 ## 🎬 Features
 - 🔤 Animated flipboard letters
