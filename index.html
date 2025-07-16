@@ -4,23 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solari Flipboard – ZQN</title>
-  <style>
-    body {
-      background-color: #111;
-      color: white;
-      font-family: 'Courier New', Courier, monospace;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 8rem;
-    }
-    .letter {
-      display: inline-block;
-      width: 2ch;
-      margin: 0 0.2em;
-    }
-  </style>
+<style>
+  body {
+    background-color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  #board {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .letter {
+    background-color: #000;
+    color: #0f0;
+    font-weight: bold;
+    font-size: 10rem;
+    border-radius: 0.2rem;
+    padding: 0.2em 0.4em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+    border: 2px solid #222;
+    display: inline-block;
+    width: 1em;
+    text-align: center;
+  }
+</style>
+
 </head>
 <body>
   <div id="board">
