@@ -1,116 +1,66 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solari Board - ZQN (Click to Start - Clean Clack)</title>
+  <title>Solari Flipboard – ZQN</title>
   <style>
     body {
       background-color: #111;
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      font-family: monospace;
-      color: white;
-      cursor: pointer;
-    }
-    .flipboard {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
+      font-size: 8rem;
     }
     .letter {
-      background: #000;
-      color: #fff;
-      font-size: 80px;
-      width: 80px;
-      height: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 4px solid #555;
-      box-shadow: inset 0 -4px 0 #333;
-      transition: all 0.1s ease-in-out;
-    }
-    .instruction {
-      font-size: 20px;
-      opacity: 0.8;
+      display: inline-block;
+      width: 2ch;
+      margin: 0 0.2em;
     }
   </style>
 </head>
 <body>
-  <div class="flipboard">
-    <div class="letter" id="char1">A</div>
-    <div class="letter" id="char2">A</div>
-    <div class="letter" id="char3">A</div>
+  <div id="board">
+    <span class="letter">A</span>
+    <span class="letter">A</span>
+    <span class="letter">A</span>
   </div>
 
-  <p class="instruction">Click anywhere to start flipboard</p>
-
-  <audio id="clack" preload="auto">
-    <source src="clack.wav" type="audio/wav">
-  </audio>
+  <audio id="clack" src="clack.wav" preload="auto"></audio>
 
   <script>
-    const target = ['Z', 'Q', 'N'];
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    const delay = 100;
-    const flipsPerChar = 15;
-    const baseSound = document.getElementById('clack');
+    window.onload = () => {
+      const audio = document.getElementById('clack');
+      const letters = document.querySelectorAll('.letter');
+      const target = ['Z', 'Q', 'N'];
 
-    function playCleanClack() {
-      const clone = baseSound.cloneNode();
-      clone.volume = 1.0;
-      clone.play().catch(() => {});
-    }
+      function flipLetter(letterEl, targetChar, callback) {
+        let currentChar = 'A';
+        const interval = setInterval(() => {
+          letterEl.textContent = currentChar;
+          audio.currentTime = 0;
+          audio.play();
+          if (currentChar === targetChar) {
+            clearInterval(interval);
+            callback();
+          } else {
+            currentChar = String.fromCharCode(currentChar.charCodeAt(0) + 1);
+          }
+        }, 100);
+      }
 
-    function flipChar(charId, finalChar, callback) {
-      let flipCount = 0;
-      const element = document.getElementById(charId);
-
-      const flip = () => {
-        const randLetter = letters[Math.floor(Math.random() * letters.length)];
-        element.textContent = randLetter;
-
-        if (flipCount % 2 === 0) playCleanClack();
-
-        flipCount++;
-
-        if (flipCount < flipsPerChar) {
-          setTimeout(flip, delay);
-        } else {
-          element.textContent = finalChar;
-          setTimeout(() => {
-            playCleanClack();
-            if (callback) callback();
-          }, delay);
-        }
-      };
-
-      flip();
-    }
-
-    function startBoard() {
-      flipChar("char1", target[0], () => {
-        flipChar("char2", target[1], () => {
-          flipChar("char3", target[2]);
+      function startFlip(index = 0) {
+        if (index >= letters.length) return;
+        flipLetter(letters[index], target[index], () => {
+          startFlip(index + 1);
         });
-      });
-    }
+      }
 
-    document.body.addEventListener('click', () => {
-      baseSound.play().then(() => {
-        baseSound.pause();
-        baseSound.currentTime = 0;
-        startBoard();
-        document.querySelector('.instruction').style.display = 'none';
-      }).catch((e) => {
-        console.warn("Autoplay blocked or failed:", e);
-      });
-    }, { once: true });
+      startFlip();
+    };
   </script>
 </body>
 </html>
